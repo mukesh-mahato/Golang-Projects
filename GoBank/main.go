@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"log"
 )
 
@@ -14,6 +16,8 @@ func seedAccount(store Storage, fname, lname, pw string) *Account {
 		log.Fatal(err)
 	}
 
+	fmt.Println("new account =>", acc.Number)
+
 	return acc
 }
 
@@ -22,6 +26,8 @@ func seedAccounts(s Storage) {
 }
 
 func main() {
+	seed := flag.Bool("seed", false, "seed the db")
+	flag.Parse()
 	store, err := NewPostgresStore()
 	if err != nil {
 		log.Fatal(err)
@@ -30,9 +36,12 @@ func main() {
 	if err := store.Init(); err != nil {
 		log.Fatal(err)
 	}
-	// fmt.Printf("%+v\n", store)
-	// seed stuff
-	seedAccounts(store)
+
+	if *seed {
+		fmt.Println("seeding the database")
+		// seed stuff
+		seedAccounts(store)
+	}
 
 	server := NewAPIServer(":3000", store)
 	server.Run()
