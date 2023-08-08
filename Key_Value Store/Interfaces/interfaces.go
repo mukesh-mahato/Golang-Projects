@@ -41,7 +41,7 @@ func (sa StrongAttacker) Attack() error {
 type SuperStrongAttacker struct{}
 
 func (ssa SuperStrongAttacker) Attack() error {
-	fmt.Println("Fcuk, What a super strong attacker")
+	fmt.Println("Fcuk, What a super strong attack!")
 
 	return nil
 }
