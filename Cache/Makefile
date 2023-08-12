@@ -1,5 +1,5 @@
 build:
 	go build -o bin/cache
 
-run:
+run: build
 	./bin/cache
