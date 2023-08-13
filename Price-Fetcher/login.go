@@ -9,7 +9,7 @@ type loggingService struct {
 	next PriceFetcher
 }
 
-func (s *loggingService) FetchPrice(ctx context.Context, ticker string) (price float64, err error) {
+func (s *loggingService) FetchPrice(ctx context.Context, ticker string) {
 	defer func(begin time.Time) {
 
 	}(time.Now())
