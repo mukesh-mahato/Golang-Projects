@@ -36,7 +36,7 @@ free:
 
 func sendMessageToServer(msgch chan Message, payload string) {
 	msg := Message{
-		From:    "Joy",
+		From:    "Mac",
 		Payload: payload,
 	}
 	msgch <- msg
