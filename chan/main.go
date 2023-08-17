@@ -1,6 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	server := NewServer()
+	server.Start()
+	go func() {
+		time.Sleep(2 * time.Second)
+		close(server.quitch)
+	}()
+
+	select {}
+}
 
 type Server struct {
 	users  map[string]string
@@ -17,26 +31,25 @@ func NewServer() *Server {
 }
 
 func (s *Server) Start() {
-	s.loop()
+	go s.loop()
 }
 
 func (s *Server) loop() {
+free:
 	for {
 		select {
 		case msg := <-s.userch:
 			fmt.Printf(msg)
 		case <-s.quitch:
-			return
+			fmt.Println("server needs to quit")
+			break free
+		default:
 		}
 	}
 }
 
 func (s *Server) addUser(user string) {
 	s.users[user] = user
-}
-
-func main() {
-
 }
 
 func sendMessage(msgch chan<- string) {
