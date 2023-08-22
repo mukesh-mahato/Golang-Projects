@@ -55,7 +55,13 @@ func (s *Server) handleConn(conn net.Conn) {
 			log.Printf("conn read error %s\n", err)
 			break
 		}
-		msg := buf[:n]
-		fmt.Println(string(msg))
+		go s.handleCommand(conn, buf[:n])
 	}
 }
+
+func(s *Server) handleCommand(conn net.Conn, rawCmd []byte) {
+	rawStr := string(rawCmd)
+	parts := strings.Split(rawStr, " ")
+}
+
+func(s *Server) handleSetCmd(conn net.Conn, ){}
