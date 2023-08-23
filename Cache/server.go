@@ -60,8 +60,22 @@ func (s *Server) handleConn(conn net.Conn) {
 }
 
 func(s *Server) handleCommand(conn net.Conn, rawCmd []byte) {
-	rawStr := string(rawCmd)
-	parts := strings.Split(rawStr, " ")
+	var(
+	rawStr = string(rawCmd)
+	parts = strings.Split(rawStr, " ")
+		)
+	if len(parts) == 0 {
+		//respond
+		fmt.Println("invalid command")
+		return
+	}
+
+	cmd := Command(parts[0])
+	if cmd == CMDSet{
+		
+	}
 }
 
-func(s *Server) handleSetCmd(conn net.Conn, ){}
+func(s *Server) handleSetCmd(conn net.Conn ) error {
+	return nil
+}
