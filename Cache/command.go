@@ -9,6 +9,12 @@ const (
   CMDGet Command = "SET"
 )
 
+type MSGSet struct {
+  Key []byte
+  Set []byte
+  TTL time.Duration
+}
+
 type Message struct {
   cmd Command
   key []byte
