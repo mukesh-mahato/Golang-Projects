@@ -15,6 +15,10 @@ type MSGSet struct {
   TTL time.Duration
 }
 
+type MSGGet struct {
+  key []byte
+}
+
 type Message struct {
   cmd Command
   key []byte
