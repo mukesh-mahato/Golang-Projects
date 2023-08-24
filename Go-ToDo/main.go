@@ -19,6 +19,15 @@ var todos = []todo{
 	{ID: "1", Task: "Painting", Iscompleted: true},
 }
 
+func main() {
+	router := gin.Default()
+	router.GET("/todos", getTodos)
+	router.GET("/todos/:id", getTodo)
+	router.PATCH("/todos/:id", toggleTodoStatus)
+	router.POST("/todos", addTodos)
+	router.Run("localhost:8080")
+}
+
 func getTodos(context *gin.Context) {
 	context.IndentedJSON(http.StatusOK, todos)
 }
@@ -69,13 +78,4 @@ func toggleTodoStatus(context *gin.Context) {
 	todo.Iscompleted = !todo.Iscompleted
 
 	context.IndentedJSON(http.StatusOK, todo)
-}
-
-func main() {
-	router := gin.Default()
-	router.GET("/todos", getTodos)
-	router.GET("/todos/:id", getTodo)
-	router.PATCH("/todos/:id", toggleTodoStatus)
-	router.POST("/todos", addTodos)
-	router.Run("localhost:8080")
 }
