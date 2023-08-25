@@ -72,10 +72,20 @@ func(s *Server) handleCommand(conn net.Conn, rawCmd []byte) {
 
 	cmd := Command(parts[0])
 	if cmd == CMDSet{
-		
+		if len(parts) != 4 {
+			//respond
+			fmt.Println("invalid SET command")
+			return
+		}
+		var (
+			key = []byte(parts[1])
+			value = []byte(parts[2])
+			ttl = []byte(parts[3])
+			)
+		if err := s.handleSetCmd(conn, )
 	}
 }
 
-func(s *Server) handleSetCmd(conn net.Conn ) error {
+func(s *Server) handleSetCmd(conn net.Conn, msg ) error {
 	return nil
 }
