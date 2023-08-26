@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strconv"
 
 	cache "github.com/mukeshmahato18/cache/Cache"
 )
@@ -77,15 +78,23 @@ func(s *Server) handleCommand(conn net.Conn, rawCmd []byte) {
 			fmt.Println("invalid SET command")
 			return
 		}
-		var (
-			key = []byte(parts[1])
-			value = []byte(parts[2])
-			ttl = []byte(parts[3])
-			)
-		if err := s.handleSetCmd(conn, )
+		ttl, err := strconv.Atoi(parts[3])
+		if err != nil {
+			
+		}
+		msg ;= MSGSet{
+			Key: []byte(parts[1]),
+			Value: []byte(parts[2]),
+			TTl: time.Duration(ttl),
+		}
+		if err := s.handleSetCmd(conn, msg); err != nil {
+			//respond
+			return
+		}
 	}
 }
 
 func(s *Server) handleSetCmd(conn net.Conn, msg ) error {
+	fmt.Println("handling th set command: ", msg)
 	return nil
 }
