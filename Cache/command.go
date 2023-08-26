@@ -11,7 +11,7 @@ const (
 
 type MSGSet struct {
   Key []byte
-  Set []byte
+  Value []byte
   TTL time.Duration
 }
 
