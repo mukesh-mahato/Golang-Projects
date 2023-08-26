@@ -98,3 +98,18 @@ func(s *Server) handleSetCmd(conn net.Conn, msg ) error {
 	fmt.Println("handling th set command: ", msg)
 	return nil
 }
+
+func parseCommand(raw []byte) (*Message, error) {
+	var(
+	rawStr = string(rawCmd)
+	parts = strings.Split(rawStr, " ")
+		)
+	if len(parts) == 0 {
+		//respond
+		fmt.Println("invalid command")
+		return
+	}
+	msg:= &Message {
+		
+	}
+}
