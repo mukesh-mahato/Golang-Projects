@@ -61,37 +61,15 @@ func (s *Server) handleConn(conn net.Conn) {
 }
 
 func(s *Server) handleCommand(conn net.Conn, rawCmd []byte) {
-	var(
-	rawStr = string(rawCmd)
-	parts = strings.Split(rawStr, " ")
-		)
-	if len(parts) == 0 {
-		//respond
-		fmt.Println("invalid command")
+	msg err := parseCommand(rawCmd)
+	if err != nil {
 		return
 	}
-
-	cmd := Command(parts[0])
-	if cmd == CMDSet{
-		if len(parts) != 4 {
-			//respond
-			fmt.Println("invalid SET command")
-			return
-		}
-		ttl, err := strconv.Atoi(parts[3])
-		if err != nil {
-			
-		}
-		msg ;= MSGSet{
-			Key: []byte(parts[1]),
-			Value: []byte(parts[2]),
-			TTl: time.Duration(ttl),
-		}
-		if err := s.handleSetCmd(conn, msg); err != nil {
-			//respond
-			return
-		}
+	if err := s.handleSetCmd(conn, msg); err != nil {
+		//respond
+		return
 	}
+}
 }
 
 func(s *Server) handleSetCmd(conn net.Conn, msg ) error {
@@ -101,15 +79,27 @@ func(s *Server) handleSetCmd(conn net.Conn, msg ) error {
 
 func parseCommand(raw []byte) (*Message, error) {
 	var(
-	rawStr = string(rawCmd)
+	rawStr = string(raw)
 	parts = strings.Split(rawStr, " ")
 		)
-	if len(parts) == 0 {
-		//respond
-		fmt.Println("invalid command")
-		return
+	if len(parts) < 2 {
+		return nil, errors.New("invalid protocal format")
 	}
 	msg:= &Message {
-		
+		Cmd: Command(parts[0]),
+		Key: []byte(parts[1]),
 	}
+	if msg.Cmd == CMDSet {
+		if len(parts) < 4 {
+		return nil, errors.New("invalid SET command")
+	}
+		msg.Value = []byte(parts[2])
+		
+		ttl, err := strconv.Atoi(parts[3])
+		if err != nil {
+			return errors.New("invalid SET TTL")
+		}
+		msg.TTL = time.Duration(ttl)
+	}
+	return msg, nil
 }
