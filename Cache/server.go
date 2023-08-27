@@ -63,6 +63,8 @@ func (s *Server) handleConn(conn net.Conn) {
 func(s *Server) handleCommand(conn net.Conn, rawCmd []byte) {
 	msg err := parseCommand(rawCmd)
 	if err != nil {
+		fmt.Println("failded to parse command", err)
+		//respond
 		return
 	}
 	if err := s.handleSetCmd(conn, msg); err != nil {
