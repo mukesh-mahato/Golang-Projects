@@ -6,7 +6,7 @@ type Commnd string
 
 const (
   CMDSet Command = "SET"
-  CMDGet Command = "SET"
+  CMDGet Command = "GET"
 )
 
 type MSGSet struct {
