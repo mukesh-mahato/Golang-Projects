@@ -26,6 +26,3 @@ type Message struct {
   TTL time.Duration
 }
 
-func parseCommand(raw []byte) (*Message, error) {
-  
-}
